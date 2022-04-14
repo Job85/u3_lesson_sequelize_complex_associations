@@ -9,10 +9,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      MediumArticle.belongsTo(models.MediumUser, {
-        as: 'author',
-        foreignKey: 'authorId'
-      })
+      MediumArticle.belongsToMany(models.MediumUser, {
+        as: 'articles',
+        through: models.MediumReadingList,
+        foreignKey: 'articleId'
+      }),
+        MediumArticle.belongsTo(models.MediumUser, {
+          as: 'author',
+          foreignKey: 'authorId'
+        })
     }
   }
   MediumArticle.init(
